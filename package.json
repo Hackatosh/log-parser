@@ -1,0 +1,20 @@
+{
+  "name": "log-parser",
+  "version": "1.0.0",
+  "description": "A Log Parser",
+  "main": "index.js",
+  "repository": "git@github.com:Hackatosh/log-parser.git",
+  "author": "Hackatosh <edouard.benauw@student.ecp.fr>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --collectCoverage"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.2.4",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
