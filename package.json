@@ -10,11 +10,22 @@
     "start:dev": "ts-node src/index.ts",
     "start:compiled": "node dist/index.js",
     "build": "rimraf ./dist && tsc -b tsconfig.build.json",
-    "test": "jest --collectCoverage"
+    "test": "jest --collectCoverage",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src"
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/eslint": "^7.28.0",
     "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.5.2",
     "jest": "^27.2.4",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",

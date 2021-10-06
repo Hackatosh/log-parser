@@ -1,0 +1,10 @@
+*.idea
+*.iml
+*.vscode
+!.*
+/dist/
+/packages/*/dist/
+node_modules/
+types/
+typings/
+*.js
