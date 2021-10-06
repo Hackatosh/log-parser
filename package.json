@@ -2,11 +2,14 @@
   "name": "log-parser",
   "version": "1.0.0",
   "description": "A Log Parser",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "git@github.com:Hackatosh/log-parser.git",
   "author": "Hackatosh <edouard.benauw@student.ecp.fr>",
   "license": "MIT",
   "scripts": {
+    "start:dev": "ts-node src/index.ts",
+    "start:compiled": "node dist/index.js",
+    "build": "rimraf ./dist && tsc -b tsconfig.build.json",
     "test": "jest --collectCoverage"
   },
   "dependencies": {},
