@@ -6,6 +6,9 @@
   "repository": "git@github.com:Hackatosh/log-parser.git",
   "author": "Hackatosh <edouard.benauw@student.ecp.fr>",
   "license": "MIT",
+  "engines": {
+    "node": "16"
+  },
   "scripts": {
     "start:dev": "ts-node src/index.ts",
     "start:compiled": "node dist/index.js",
