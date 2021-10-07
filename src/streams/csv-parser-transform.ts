@@ -1,6 +1,6 @@
 import { Transform, TransformCallback } from 'stream';
 
-import { ParsedLogLine } from '../typing';
+import { ParsedLogLine } from '../typings/log-line';
 
 export class CsvParserTransform extends Transform {
   constructor() {

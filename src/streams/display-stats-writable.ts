@@ -1,6 +1,6 @@
 import { Writable } from 'stream';
 
-import { StatsReport } from '../typing';
+import { StatsReport } from '../typings/stats-report';
 
 export class DisplayStatsWritable extends Writable {
   constructor() {

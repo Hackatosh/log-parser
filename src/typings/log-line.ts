@@ -7,11 +7,3 @@ export interface ParsedLogLine {
   status: number;
   bytes: number;
 }
-
-export interface StatsReport {
-
-}
-
-export interface Alert {
-
-}

@@ -1,6 +1,7 @@
 import { Transform, TransformCallback } from 'stream';
 
-import { Alert, ParsedLogLine } from '../typing';
+import { ParsedLogLine } from '../typings/log-line';
+import { AlertMessage } from '../typings/alert-message';
 
 export class AlertsLogicTransform extends Transform {
   constructor() {
@@ -13,7 +14,7 @@ export class AlertsLogicTransform extends Transform {
     return false;
   }
 
-  private _generateAlerts(): Array<Alert> {
+  private _generateAlerts(): Array<AlertMessage> {
     // TODO
     return null;
   }

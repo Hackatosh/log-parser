@@ -1,6 +1,7 @@
 import { Transform, TransformCallback } from 'stream';
 
-import { ParsedLogLine, StatsReport } from '../typing';
+import { ParsedLogLine } from '../typings/log-line';
+import { StatsReport } from '../typings/stats-report';
 
 export class StatsLogicTransform extends Transform {
   constructor() {
