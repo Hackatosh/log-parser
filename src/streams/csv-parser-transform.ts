@@ -5,7 +5,7 @@ import { ParsedLogLine } from '../typings/log-line';
 export class CsvParserTransform extends Transform {
   constructor() {
     // You read csv line and push parsed log file line
-    super({ readableObjectMode: false, writableObjectMode: true });
+    super({ readableObjectMode: true, writableObjectMode: false });
   }
 
   private static _parseCSV(rawCsvLine: string): ParsedLogLine {
@@ -30,9 +30,9 @@ export class CsvParserTransform extends Transform {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _transform(rawCsvLine: string, _: BufferEncoding, callback: TransformCallback): void {
+  _transform(rawCsvLine: Buffer, _: BufferEncoding, callback: TransformCallback): void {
     try {
-      const parsedLogFileLine = CsvParserTransform._parseCSV(rawCsvLine);
+      const parsedLogFileLine = CsvParserTransform._parseCSV(rawCsvLine.toString());
       this.push(parsedLogFileLine);
       callback();
     } catch (e) {
