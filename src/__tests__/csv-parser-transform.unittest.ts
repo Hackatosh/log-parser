@@ -1,10 +1,7 @@
-import { AlertFired } from '../typings/alert-message';
 import { CsvParserTransform } from '../streams/csv-parser-transform';
-import { DisplayAlertsWritable } from '../streams/display-alerts-writable';
+import { ParsedLogLine } from '../typings/log-line';
 
 import SpyInstance = jest.SpyInstance;
-
-import { ParsedLogLine } from '../typings/log-line';
 
 describe('Parse CSV Lines', () => {
   let csvParserTransform: CsvParserTransform;
@@ -35,5 +32,19 @@ describe('Parse CSV Lines', () => {
     await new Promise((res, rej) => csvParserTransform._transform(csvLine, undefined, (err) => (err ? rej(err) : res(null))));
     expect(pushMock).toHaveBeenCalledTimes(1);
     expect(pushMock).toBeCalledWith(expectedParsedLogLine);
+  });
+
+  test('Throw error when csv line is incorrect (incorrect type)', async () => {
+    const csvLine = '"10.0.0.2","-","apache",1549573860,"GET /api/user HTTP/1.0",twohundred,1234';
+    const prom = new Promise((res, rej) => csvParserTransform._transform(csvLine, undefined, (err) => (err ? rej(err) : res(null))));
+    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    expect(pushMock).toHaveBeenCalledTimes(0);
+  });
+
+  test('Throw error when csv line is incorrect (missing field)', async () => {
+    const csvLine = '"10.0.0.2","-","apache",1549573860,200,1234';
+    const prom = new Promise((res, rej) => csvParserTransform._transform(csvLine, undefined, (err) => (err ? rej(err) : res(null))));
+    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    expect(pushMock).toHaveBeenCalledTimes(0);
   });
 });
