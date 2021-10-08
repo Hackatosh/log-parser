@@ -10,7 +10,7 @@ export class CsvParserTransform extends Transform {
 
   public static parseCSV(csvLine: string): ParsedLogLine {
     // eslint-disable-next-line max-len
-    const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(status[0-9]+),(bytes[0-9]+)/;
+    const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(?<status>[0-9]+),(?<bytes>[0-9]+)/;
     const parsed = new RegExp(regexPattern).exec(csvLine);
     if (!parsed) {
       throw new Error(`Incorrect CSV line : ${csvLine}`);
