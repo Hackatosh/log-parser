@@ -124,7 +124,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-return': 'error',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
-    '@typescript-eslint/no-unsafe-call': 'error',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/restrict-template-expressions': 'warn',
     '@typescript-eslint/lines-between-class-members': 'error',
 

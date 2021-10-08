@@ -8,12 +8,12 @@ export class CsvParserTransform extends Transform {
     super({ readableObjectMode: false, writableObjectMode: true });
   }
 
-  public static parseCSV(csvLine: string): ParsedLogLine {
+  private static _parseCSV(rawCsvLine: string): ParsedLogLine {
     // eslint-disable-next-line max-len
     const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(?<status>[0-9]+),(?<bytes>[0-9]+)/;
-    const parsed = new RegExp(regexPattern).exec(csvLine);
+    const parsed = new RegExp(regexPattern).exec(rawCsvLine);
     if (!parsed) {
-      throw new Error(`Incorrect CSV line : ${csvLine}`);
+      throw new Error(`Incorrect CSV line : ${rawCsvLine}`);
     }
     const { remoteHost, rfc931, authUser, timestamp, requestMethod, requestRoute, requestProtocol, status, bytes } = parsed.groups;
     return {
@@ -30,9 +30,9 @@ export class CsvParserTransform extends Transform {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _transform(chunk: string, encoding: BufferEncoding, callback: TransformCallback): void {
+  _transform(rawCsvLine: string, _: BufferEncoding, callback: TransformCallback): void {
     try {
-      const parsedLogFileLine = CsvParserTransform.parseCSV(chunk);
+      const parsedLogFileLine = CsvParserTransform._parseCSV(rawCsvLine);
       this.push(parsedLogFileLine);
       callback();
     } catch (e) {
