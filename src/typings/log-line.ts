@@ -2,8 +2,10 @@ export interface ParsedLogLine {
   remoteHost: string;
   rfc931: string;
   authUser: string;
-  date: number;
-  request: string;
+  timestamp: number;
+  requestMethod: string;
+  requestRoute: string;
+  requestProtocol: string;
   status: number;
   bytes: number;
 }

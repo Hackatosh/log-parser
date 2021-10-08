@@ -9,8 +9,24 @@ export class CsvParserTransform extends Transform {
   }
 
   public static parseCSV(csvLine: string): ParsedLogLine {
-    // TODO
-    return null;
+    // eslint-disable-next-line max-len
+    const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(status[0-9]+),(bytes[0-9]+)/;
+    const parsed = new RegExp(regexPattern).exec(csvLine);
+    if (!parsed) {
+      throw new Error(`Incorrect CSV line : ${csvLine}`);
+    }
+    const { remoteHost, rfc931, authUser, timestamp, requestMethod, requestRoute, requestProtocol, status, bytes } = parsed.groups;
+    return {
+      remoteHost,
+      rfc931,
+      authUser,
+      timestamp: Number(timestamp),
+      requestMethod,
+      requestRoute,
+      requestProtocol,
+      status: Number(status),
+      bytes: Number(bytes),
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
