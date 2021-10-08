@@ -1,5 +1,4 @@
 import { Writable } from 'stream';
-import { stat } from 'fs';
 
 import { StatsReport, StatsReportForDisplay } from '../typings/stats-report';
 import { formatTimestamp } from '../helpers/format-timestamp';
@@ -34,7 +33,7 @@ export class DisplayStatsWritable extends Writable {
       .join('\n');
 
     const totalHitsHelpString = '# Show total number of hits';
-    const totalHitsString = `Total ${statsReport.totalHits}`;
+    const totalHitsString = `Total - ${statsReport.totalHits} requests`;
 
     const stringToDisplay = [
       welcomeString,
