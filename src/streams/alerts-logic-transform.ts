@@ -21,14 +21,10 @@ export class AlertsLogicTransform extends Transform {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _transform(chunk: ParsedLogLine, encoding: BufferEncoding, callback: TransformCallback): void {
-    try {
-      this._ingestParsedLogFileLine(chunk);
-      for (const alert of this._generateAlerts()) {
-        this.push(alert);
-      }
-      callback();
-    } catch (e) {
-      callback(e);
+    this._ingestParsedLogFileLine(chunk);
+    for (const alert of this._generateAlerts()) {
+      this.push(alert);
     }
+    callback();
   }
 }

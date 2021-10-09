@@ -1,12 +1,14 @@
 import { DisplayStatsWritable } from '../streams/display-stats-writable';
+import { StatsReport } from '../typings/stats-report';
 
 import SpyInstance = jest.SpyInstance;
-
-import { StatsReport } from '../typings/stats-report';
 
 describe('Display Stats Messages', () => {
   let consoleLogMock: SpyInstance;
   let displayStatsWritable: DisplayStatsWritable;
+
+  const callWrite = (statsReport: StatsReport): Promise<void> =>
+    new Promise((res, rej) => displayStatsWritable._write(statsReport, undefined, (err) => (err ? rej(err) : res(null))));
 
   beforeEach(() => {
     consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
@@ -38,6 +40,7 @@ describe('Display Stats Messages', () => {
         400: 1,
       }
     };
+
     const expectedMessage = '# Request statistics from 07-02-2019 22:11:00 to 07-02-2019 22:11:10\n' +
     '# Show number of hits for each HTTP Status (desc)\n' +
     'Status 200 - 7 requests\n' +
@@ -50,7 +53,8 @@ describe('Display Stats Messages', () => {
     'Request "GET /api/out-of-luck" - 1 requests\n' +
     '# Show total number of hits\n' +
     'Total - 11 requests';
-    await new Promise((res, rej) => displayStatsWritable._write(statsReport, undefined, (err) => (err ? rej(err) : res(null))));
+
+    await callWrite(statsReport);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
     expect(consoleLogMock).toBeCalledWith(expectedMessage);
   });
