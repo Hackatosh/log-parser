@@ -19,6 +19,7 @@ export class AlertsLogicTransform extends Transform {
     this._timeIntervalStored = 120; // 2 minutes
     this._totalRequestsThreshold = this._timeIntervalStored * requestsPerSecondThreshold;
     this._isFiring = false; // Initially not firing
+    this._timestampArray = new TimestampArray();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
