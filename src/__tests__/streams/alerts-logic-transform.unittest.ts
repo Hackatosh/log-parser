@@ -94,4 +94,11 @@ describe('Alerts Logic', () => {
     expect(pushMock).toHaveBeenCalledTimes(3);
     expect(pushMock).toHaveBeenNthCalledWith(3, new AlertFired(1200, baseTimestamp + 122));
   });
+
+  test('Should discard request that are earlier than the time interval stored', async () => {
+    await sendRequestsAtTime(1, 122);
+    await sendRequestsAtTime(1200, 1);
+
+    expect(pushMock).toHaveBeenCalledTimes(0);
+  });
 });
