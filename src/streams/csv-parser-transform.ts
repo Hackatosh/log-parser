@@ -15,7 +15,17 @@ export class CsvParserTransform extends Transform {
     if (!parsed) {
       throw new Error(`Incorrect CSV line : ${rawCsvLine}`);
     }
-    const { remoteHost, rfc931, authUser, timestamp, requestMethod, requestRoute, requestProtocol, status, bytes } = parsed.groups;
+    const {
+      remoteHost,
+      rfc931,
+      authUser,
+      timestamp,
+      requestMethod,
+      requestRoute,
+      requestProtocol,
+      status,
+      bytes
+    } = parsed.groups;
     return {
       remoteHost,
       rfc931,
@@ -30,19 +40,13 @@ export class CsvParserTransform extends Transform {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _transform(rawCsvLines: Buffer, _: BufferEncoding, callback: TransformCallback): void {
-    const splitCsvLines = rawCsvLines.toString().split('\n');
-    const errors: Array<Error> = [];
-    for (const splitCsvLine of splitCsvLines) {
-      try {
-        const parsedLogFileLine = CsvParserTransform._parseCSV(splitCsvLine);
-        this.push(parsedLogFileLine);
-      } catch (e) {
-        errors.push(e);
-      }
+  _transform(csvLine: string, _: BufferEncoding, callback: TransformCallback): void {
+    try {
+      const parsedLogFileLine = CsvParserTransform._parseCSV(csvLine.toString());
+      this.push(parsedLogFileLine);
+      callback();
+    } catch (e) {
+      callback(e);
     }
-    errors.length === 0 ?
-      callback() :
-      callback(new Error(`Error while parsing CSV : "${errors.map((e) => e.message).join('" and "')}"`));
   }
 }
