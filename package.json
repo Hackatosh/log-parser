@@ -7,7 +7,7 @@
   "author": "Hackatosh <edouard.benauw@student.ecp.fr>",
   "license": "MIT",
   "engines": {
-    "node": "16"
+    "node": "14"
   },
   "scripts": {
     "start:dev": "ts-node src/index.ts",
