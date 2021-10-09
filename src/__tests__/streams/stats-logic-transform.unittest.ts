@@ -3,7 +3,7 @@ import { StatsLogicTransform } from '../../streams/stats-logic-transform';
 
 import SpyInstance = jest.SpyInstance;
 
-describe('Parse CSV Lines', () => {
+describe('Stats Logic', () => {
   let statsLogicTransform: StatsLogicTransform;
   let pushMock: SpyInstance;
 

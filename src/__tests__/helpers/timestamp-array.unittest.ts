@@ -138,11 +138,13 @@ describe('Timestamp array', () => {
       timestampArray.add(3);
       timestampArray.add(2);
       expect(timestampArray.min).toEqual(1);
+      expect(timestampArray.max).toEqual(3);
       expect(timestampArray.length).toEqual(3);
     });
 
     test('Should correctly be able to get min/max/length (empty array)', () => {
       expect(timestampArray.min).toBeNull();
+      expect(timestampArray.max).toBeNull();
       expect(timestampArray.length).toEqual(0);
     });
   });

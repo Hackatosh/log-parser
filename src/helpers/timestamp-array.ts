@@ -24,6 +24,10 @@ export class TimestampArray {
     return this._array.length > 0 ? this._array[0] : null;
   }
 
+  public get max(): number {
+    return this._array.length > 0 ? this._array[this._array.length - 1] : null;
+  }
+
   // Get a copy of the array, for testing purpose
   public get array(): Array<number> {
     return [...this._array];

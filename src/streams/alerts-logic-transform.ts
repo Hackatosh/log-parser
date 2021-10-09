@@ -31,12 +31,12 @@ export class AlertsLogicTransform extends Transform {
     }
 
     const totalRequestsForTimeInterval = this._timestampArray.length;
-    if (!this._isFiring && totalRequestsForTimeInterval > this._totalRequestsThreshold) {
+    if (!this._isFiring && totalRequestsForTimeInterval >= this._totalRequestsThreshold) {
       this._isFiring = true;
       this.push(new AlertFired(totalRequestsForTimeInterval, this._timestampArray.min));
     } else if (this._isFiring && totalRequestsForTimeInterval < this._totalRequestsThreshold) {
       this._isFiring = false;
-      this.push(new AlertResolved(this._timestampArray.min));
+      this.push(new AlertResolved(this._timestampArray.max));
     }
 
     callback();

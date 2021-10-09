@@ -34,9 +34,9 @@ const main = (logParserArgs: LogParserArgs): void => {
 
   fileReadStream.pipe(csvParserTransform);
   csvParserTransform.pipe(alertsLogicTransform);
-  csvParserTransform.pipe(statsLogicTransform);
+  // csvParserTransform.pipe(statsLogicTransform);
   alertsLogicTransform.pipe(displayAlertsWritable);
-  statsLogicTransform.pipe(displayStatsWritable);
+  // statsLogicTransform.pipe(displayStatsWritable);
 };
 
 main(parseArgs(minimist(process.argv.slice(2))));
