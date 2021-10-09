@@ -2,7 +2,7 @@ import { ParsedArgs } from 'minimist';
 
 import { LogParserArgs } from '../typings/log-parser-args';
 
-const DEFAULT_FILE_PATH = `${process.cwd()}/resources/sample_csv.txt`;
+export const DEFAULT_FILE_PATH = `${process.cwd()}/resources/sample_csv.txt`;
 
 export const parseArgs = (args: ParsedArgs): LogParserArgs => {
   let logFilePath: string;

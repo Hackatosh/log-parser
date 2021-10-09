@@ -29,7 +29,8 @@ const main = (logParserArgs: LogParserArgs): void => {
     console.log(`Unexpected error, process will exit. Error : ${err}`);
     process.exit(1);
   });
-  [csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable].forEach(attachErrorHandler);
+  [csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable]
+    .forEach(attachErrorHandler);
 
   fileReadStream.pipe(csvParserTransform);
   csvParserTransform.pipe(alertsLogicTransform);
