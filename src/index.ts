@@ -1,8 +1,7 @@
 /* istanbul ignore file */
-import { createReadStream, read } from 'fs';
-import { Writable } from 'stream';
+import { createReadStream } from 'fs';
+import { Stream } from 'stream';
 
-import moment from 'moment';
 import minimist from 'minimist';
 
 import { CsvParserTransform } from './streams/csv-parser-transform';
@@ -10,29 +9,33 @@ import { AlertsLogicTransform } from './streams/alerts-logic-transform';
 import { StatsLogicTransform } from './streams/stats-logic-transform';
 import { DisplayStatsWritable } from './streams/display-stats-writable';
 import { DisplayAlertsWritable } from './streams/display-alerts-writable';
-import { AlertFired, AlertMessage, AlertMessageType, AlertResolved } from './typings/alert-message';
-import { TestWritable } from './streams/test-writable-stream';
+import { LogParserArgs } from './typings/log-parser-args';
+import { parseArgs } from './helpers/parse-args';
 
-import ReadableStream = NodeJS.ReadableStream;
+const main = (logParserArgs: LogParserArgs): void => {
+  const fileReadStream = createReadStream(logParserArgs.logFilePath);
+  fileReadStream.on('error', (err) => {
+    console.log(`Error while reading file, process will exit. Error : ${err}`);
+    process.exit(1);
+  });
 
-const DEFAULT_FILE_PATH = `${__dirname}/../resources/sample_csv.txt`;
+  const csvParserTransform = new CsvParserTransform();
+  const alertsLogicTransform = new AlertsLogicTransform();
+  const statsLogicTransform = new StatsLogicTransform();
+  const displayStatsWritable = new DisplayStatsWritable();
+  const displayAlertsWritable = new DisplayAlertsWritable();
 
-const createFileStream = (providedFilePath?: string): ReadableStream => {
-  let filePath;
-  if (!filePath) {
-    // eslint-disable-next-line no-console
-    console.log(`Filepath not provided. Using default filepath : ${DEFAULT_FILE_PATH}`);
-    filePath = DEFAULT_FILE_PATH;
-  } else {
-    filePath = providedFilePath.toString();
-  }
-  try {
-    return createReadStream(filePath);
-  } catch (err) {
-    throw new Error(`Error while opening file at filepath : ${filePath}. File probably does not exist.`);
-  }
+  const attachErrorHandler = (stream: Stream): Stream => stream.on('error', (err) => {
+    console.log(`Unexpected error, process will exit. Error : ${err}`);
+    process.exit(1);
+  });
+  [csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable].forEach(attachErrorHandler);
+
+  fileReadStream.pipe(csvParserTransform);
+  csvParserTransform.pipe(alertsLogicTransform);
+  csvParserTransform.pipe(statsLogicTransform);
+  alertsLogicTransform.pipe(displayAlertsWritable);
+  statsLogicTransform.pipe(displayStatsWritable);
 };
 
-const readStream = createFileStream(minimist(process.argv.slice(2)).filePath);
-const csv = new CsvParserTransform();
-readStream.pipe(csv).pipe(new TestWritable());
+main(parseArgs(minimist(process.argv.slice(2))));

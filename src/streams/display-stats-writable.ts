@@ -45,7 +45,6 @@ export class DisplayStatsWritable extends Writable {
       totalHitsString
     ]
       .join('\n');
-    // eslint-disable-next-line no-console
     console.log(stringToDisplay);
   }
 

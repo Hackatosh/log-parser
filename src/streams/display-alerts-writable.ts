@@ -14,18 +14,15 @@ export class DisplayAlertsWritable extends Writable {
     switch (alertMessage.messageType) {
       case AlertMessageType.FIRED: {
         const { request, hits, timestamp } = alertMessage as AlertFired;
-        // eslint-disable-next-line no-console
         console.log(`High traffic generated an alert - request="${request}", hits = ${hits}, triggered at time = ${formatTimestamp(timestamp)}`);
         break;
       }
       case AlertMessageType.RESOLVED: {
         const { request, timestamp } = alertMessage as AlertResolved;
-        // eslint-disable-next-line no-console
         console.log(`High traffic alert resolved - request="${request}", resolved at time = ${formatTimestamp(timestamp)}`);
         break;
       }
       default:
-        // eslint-disable-next-line no-console
         console.log(`Trying to display unknown alert message type : ${alertMessage.messageType}`);
     }
   }

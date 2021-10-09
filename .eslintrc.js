@@ -72,8 +72,8 @@ module.exports = {
     'no-use-before-define': ['error'],
     'max-len': ['error', { code: 150 }],
     'no-continue': ['off'],
-    'no-process-exit': ['error'],
-    'no-console': ['error'],
+    'no-process-exit': ['off'],
+    'no-console': ['off'],
     quotes: [
       'error',
       'single',
