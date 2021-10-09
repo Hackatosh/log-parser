@@ -13,13 +13,13 @@ export class DisplayAlertsWritable extends Writable {
     const formatTimestamp = (timestamp: number): string => moment(timestamp * 1000).format('DD-MM-YYYY HH:mm:ss');
     switch (alertMessage.messageType) {
       case AlertMessageType.FIRED: {
-        const { request, hits, timestamp } = alertMessage as AlertFired;
-        console.log(`High traffic generated an alert - request="${request}", hits = ${hits}, triggered at time = ${formatTimestamp(timestamp)}`);
+        const { hits, timestamp } = alertMessage as AlertFired;
+        console.log(`High traffic generated an alert - hits = ${hits}, triggered at time = ${formatTimestamp(timestamp)}`);
         break;
       }
       case AlertMessageType.RESOLVED: {
-        const { request, timestamp } = alertMessage as AlertResolved;
-        console.log(`High traffic alert resolved - request="${request}", resolved at time = ${formatTimestamp(timestamp)}`);
+        const { timestamp } = alertMessage as AlertResolved;
+        console.log(`High traffic alert resolved - resolved at time = ${formatTimestamp(timestamp)}`);
         break;
       }
       default:

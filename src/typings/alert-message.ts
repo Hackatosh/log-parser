@@ -12,28 +12,22 @@ export abstract class AlertMessage {
 }
 
 export class AlertFired extends AlertMessage {
-  public readonly request: string;
-
   public readonly hits: number;
 
   public readonly timestamp: number; // Unix time
 
-  constructor(request: string, hits: number, timestamp: number) {
+  constructor(hits: number, timestamp: number) {
     super(AlertMessageType.FIRED);
-    this.request = request;
     this.hits = hits;
     this.timestamp = timestamp;
   }
 }
 
 export class AlertResolved extends AlertMessage {
-  request: string;
-
   timestamp: number; // Unix time
 
-  constructor(request: string, timestamp: number) {
+  constructor(timestamp: number) {
     super(AlertMessageType.RESOLVED);
-    this.request = request;
     this.timestamp = timestamp;
   }
 }

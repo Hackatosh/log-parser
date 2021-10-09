@@ -21,8 +21,8 @@ describe('Display Alert Messages', () => {
   });
 
   test('Should correctly display a fired alert message', async () => {
-    const alert = new AlertFired('GET /api/users', 4, 1549573860);
-    const expectedMessage = 'High traffic generated an alert - request="GET /api/users", hits = 4, triggered at time = 07-02-2019 22:11:00';
+    const alert = new AlertFired(4, 1549573860);
+    const expectedMessage = 'High traffic generated an alert - hits = 4, triggered at time = 07-02-2019 22:11:00';
 
     await callWrite(alert);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
@@ -30,8 +30,8 @@ describe('Display Alert Messages', () => {
   });
 
   test('Should correctly display a resolved alert message', async () => {
-    const alert = new AlertResolved('GET /api/users', 1549573860);
-    const expectedMessage = 'High traffic alert resolved - request="GET /api/users", resolved at time = 07-02-2019 22:11:00';
+    const alert = new AlertResolved(1549573860);
+    const expectedMessage = 'High traffic alert resolved - resolved at time = 07-02-2019 22:11:00';
 
     await callWrite(alert);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
