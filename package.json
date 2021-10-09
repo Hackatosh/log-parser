@@ -6,6 +6,9 @@
   "repository": "git@github.com:Hackatosh/log-parser.git",
   "author": "Hackatosh <edouard.benauw@student.ecp.fr>",
   "license": "MIT",
+  "engines": {
+    "node": "16"
+  },
   "scripts": {
     "start:dev": "ts-node src/index.ts",
     "start:compiled": "node dist/index.js",
@@ -14,10 +17,14 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "moment": "^2.29.1"
+  },
   "devDependencies": {
     "@types/eslint": "^7.28.0",
     "@types/jest": "^27.0.2",
+    "@types/minimist": "^1.2.2",
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",

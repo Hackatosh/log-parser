@@ -72,8 +72,8 @@ module.exports = {
     'no-use-before-define': ['error'],
     'max-len': ['error', { code: 150 }],
     'no-continue': ['off'],
-    'no-process-exit': ['error'],
-    'no-console': ['error'],
+    'no-process-exit': ['off'],
+    'no-console': ['off'],
     quotes: [
       'error',
       'single',
@@ -122,9 +122,9 @@ module.exports = {
     '@typescript-eslint/no-loop-func': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-unsafe-return': 'error',
-    '@typescript-eslint/no-unsafe-member-access': 'error',
-    '@typescript-eslint/no-unsafe-assignment': 'error',
-    '@typescript-eslint/no-unsafe-call': 'error',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/restrict-template-expressions': 'warn',
     '@typescript-eslint/lines-between-class-members': 'error',
 
