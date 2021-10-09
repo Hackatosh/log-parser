@@ -60,6 +60,13 @@ describe('Timestamp array', () => {
       timestampArray.add(4);
     };
 
+    const addOneTwoTwoFour = (): void => {
+      timestampArray.add(1);
+      timestampArray.add(2);
+      timestampArray.add(2);
+      timestampArray.add(4);
+    };
+
     beforeEach(() => {
       timestampArray = new TimestampArray();
     });
@@ -89,9 +96,33 @@ describe('Timestamp array', () => {
     });
 
     test('Should correctly remove element below (equal to first element)', () => {
+      addOneTwoFour();
+      timestampArray.removeBelow(1);
+      expect(timestampArray.array).toEqual([1, 2, 4]);
     });
 
     test('Should correctly remove element below (equal to last element)', () => {
+      addOneTwoFour();
+      timestampArray.removeBelow(4);
+      expect(timestampArray.array).toEqual([4]);
+    });
+
+    test('Handle duplicate (equality)', () => {
+      addOneTwoTwoFour();
+      timestampArray.removeBelow(2);
+      expect(timestampArray.array).toEqual([2, 2, 4]);
+    });
+
+    test('Handle duplicate (not equality)', () => {
+      addOneTwoTwoFour();
+      timestampArray.removeBelow(3);
+      expect(timestampArray.array).toEqual([4]);
+    });
+
+    test('Handle duplicate (not equality)', () => {
+      addOneTwoTwoFour();
+      timestampArray.removeBelow(4);
+      expect(timestampArray.array).toEqual([4]);
     });
   });
 

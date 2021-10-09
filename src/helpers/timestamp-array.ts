@@ -29,17 +29,12 @@ export class TimestampArray {
     return [...this._array];
   }
 
-  private static _recursiveLocationOf(element: number, array: Array<number>, start: number, end: number): number {
-    const pivot = Math.floor(start + ((end - start) / 2));
-    if (array[pivot] === element) return pivot;
-    if (end - start <= 1) return array[pivot] > element ? pivot - 1 : pivot;
-    if (array[pivot] < element) {
-      return TimestampArray._recursiveLocationOf(element, array, pivot, end);
-    }
-    return TimestampArray._recursiveLocationOf(element, array, start, pivot);
-  }
-
   private static _locationOf(element: number, array: Array<number>): number {
-    return TimestampArray._recursiveLocationOf(element, array, 0, array.length);
+    for (const [index, value] of array.entries()) {
+      if (element <= value) {
+        return index - 1;
+      }
+    }
+    return array.length - 1;
   }
 }
