@@ -3,6 +3,7 @@ import { createReadStream } from 'fs';
 import { Stream } from 'stream';
 
 import minimist from 'minimist';
+import split2 from 'split2';
 
 import { CsvParserTransform } from './streams/csv-parser-transform';
 import { AlertsLogicTransform } from './streams/alerts-logic-transform';
@@ -32,7 +33,7 @@ const main = (logParserArgs: LogParserArgs): void => {
   [csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable]
     .forEach(attachErrorHandler);
 
-  fileReadStream.pipe(csvParserTransform);
+  fileReadStream.pipe(split2()).pipe(csvParserTransform);
   csvParserTransform.pipe(alertsLogicTransform);
   csvParserTransform.pipe(statsLogicTransform);
   alertsLogicTransform.pipe(displayAlertsWritable);

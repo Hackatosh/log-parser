@@ -1,8 +1,7 @@
 import { Writable } from 'stream';
 
-import moment from 'moment';
-
 import { AlertFired, AlertMessage, AlertMessageType, AlertResolved } from '../typings/alert-message';
+import { formatTimestamp } from '../helpers/format-timestamp';
 
 export class DisplayAlertsWritable extends Writable {
   constructor() {
@@ -10,7 +9,6 @@ export class DisplayAlertsWritable extends Writable {
   }
 
   private _displayAlert(alertMessage: AlertMessage): void {
-    const formatTimestamp = (timestamp: number): string => moment(timestamp * 1000).format('DD-MM-YYYY HH:mm:ss');
     switch (alertMessage.messageType) {
       case AlertMessageType.FIRED: {
         const { hits, timestamp } = alertMessage as AlertFired;
