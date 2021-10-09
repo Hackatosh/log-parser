@@ -1,3 +1,4 @@
 export interface LogParserArgs {
-  logFilePath: string
+  logFilePath: string;
+  alertRpsThreshold: number;
 }

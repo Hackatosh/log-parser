@@ -21,7 +21,7 @@ const main = (logParserArgs: LogParserArgs): void => {
   });
 
   const csvParserTransform = new CsvParserTransform();
-  const alertsLogicTransform = new AlertsLogicTransform();
+  const alertsLogicTransform = new AlertsLogicTransform(logParserArgs.alertRpsThreshold);
   const statsLogicTransform = new StatsLogicTransform();
   const displayStatsWritable = new DisplayStatsWritable();
   const displayAlertsWritable = new DisplayAlertsWritable();
@@ -40,4 +40,9 @@ const main = (logParserArgs: LogParserArgs): void => {
   statsLogicTransform.pipe(displayStatsWritable);
 };
 
-main(parseArgs(minimist(process.argv.slice(2))));
+try {
+  main(parseArgs(minimist(process.argv.slice(2))));
+} catch (err) {
+  console.log(`Error happened, process will exit. ${err}`);
+  process.exit(1);
+}
