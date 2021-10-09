@@ -1,4 +1,4 @@
-import { DEFAULT_FILE_PATH, parseArgs } from '../helpers/parse-args';
+import { DEFAULT_FILE_PATH, parseArgs } from '../../helpers/parse-args';
 
 describe('Parse args', () => {
   test('Should correctly parse minimist args', () => {

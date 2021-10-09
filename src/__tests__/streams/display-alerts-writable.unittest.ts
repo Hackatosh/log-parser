@@ -1,5 +1,5 @@
-import { DisplayAlertsWritable } from '../streams/display-alerts-writable';
-import { AlertFired, AlertMessage, AlertResolved } from '../typings/alert-message';
+import { DisplayAlertsWritable } from '../../streams/display-alerts-writable';
+import { AlertFired, AlertMessage, AlertResolved } from '../../typings/alert-message';
 
 import SpyInstance = jest.SpyInstance;
 

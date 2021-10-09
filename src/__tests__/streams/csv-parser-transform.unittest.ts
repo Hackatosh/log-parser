@@ -1,5 +1,5 @@
-import { CsvParserTransform } from '../streams/csv-parser-transform';
-import { ParsedLogLine } from '../typings/log-line';
+import { CsvParserTransform } from '../../streams/csv-parser-transform';
+import { ParsedLogLine } from '../../typings/log-line';
 
 import SpyInstance = jest.SpyInstance;
 

@@ -1,4 +1,4 @@
-import { formatTimestamp } from '../helpers/format-timestamp';
+import { formatTimestamp } from '../../helpers/format-timestamp';
 
 describe('Format timestamp', () => {
   test('Should correctly format a timestamp', () => {

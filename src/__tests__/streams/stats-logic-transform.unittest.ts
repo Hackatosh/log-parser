@@ -1,5 +1,5 @@
-import { ParsedLogLine } from '../typings/log-line';
-import { StatsLogicTransform } from '../streams/stats-logic-transform';
+import { ParsedLogLine } from '../../typings/log-line';
+import { StatsLogicTransform } from '../../streams/stats-logic-transform';
 
 import SpyInstance = jest.SpyInstance;
 

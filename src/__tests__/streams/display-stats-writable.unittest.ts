@@ -1,5 +1,5 @@
-import { DisplayStatsWritable } from '../streams/display-stats-writable';
-import { StatsReport } from '../typings/stats-report';
+import { DisplayStatsWritable } from '../../streams/display-stats-writable';
+import { StatsReport } from '../../typings/stats-report';
 
 import SpyInstance = jest.SpyInstance;
 
