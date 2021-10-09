@@ -30,13 +30,19 @@ export class CsvParserTransform extends Transform {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _transform(rawCsvLine: Buffer, _: BufferEncoding, callback: TransformCallback): void {
-    try {
-      const parsedLogFileLine = CsvParserTransform._parseCSV(rawCsvLine.toString());
-      this.push(parsedLogFileLine);
-      callback();
-    } catch (e) {
-      callback(e);
+  _transform(rawCsvLines: Buffer, _: BufferEncoding, callback: TransformCallback): void {
+    const splitCsvLines = rawCsvLines.toString().split('\n');
+    const errors: Array<Error> = [];
+    for (const splitCsvLine of splitCsvLines) {
+      try {
+        const parsedLogFileLine = CsvParserTransform._parseCSV(splitCsvLine);
+        this.push(parsedLogFileLine);
+      } catch (e) {
+        errors.push(e);
+      }
     }
+    errors.length === 0 ?
+      callback() :
+      callback(new Error(`Error while parsing CSV : "${errors.map((e) => e.message).join('" and "')}"`));
   }
 }

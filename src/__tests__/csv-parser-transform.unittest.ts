@@ -43,7 +43,7 @@ describe('Parse CSV Lines', () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,"GET /api/user HTTP/1.0",twohundred,1234';
 
     const prom = callTransform(csvLine);
-    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    await expect(prom).rejects.toThrowError(new Error(`Error while parsing CSV : "Incorrect CSV line : ${csvLine}"`));
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 
@@ -51,7 +51,17 @@ describe('Parse CSV Lines', () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,200,1234';
 
     const prom = callTransform(csvLine);
-    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    await expect(prom).rejects.toThrowError(new Error(`Error while parsing CSV : "Incorrect CSV line : ${csvLine}"`));
+    expect(pushMock).toHaveBeenCalledTimes(0);
+  });
+
+  test('Throw aggregated error when multiple csv lines are incorrect', async () => {
+    const csvLine1 = '"10.0.0.2","-","apache",1549573860,200,1234';
+    const csvLine2 = '"10.0.0.2","-","apache",1549573872,200,1234';
+    const prom = callTransform([csvLine1, csvLine2].join('\n'));
+    await expect(prom).rejects.toThrowError(
+      new Error(`Error while parsing CSV : "Incorrect CSV line : ${csvLine1}" and "Incorrect CSV line : ${csvLine2}"`
+      ));
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 });

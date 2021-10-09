@@ -33,9 +33,9 @@ const main = (logParserArgs: LogParserArgs): void => {
     .forEach(attachErrorHandler);
 
   fileReadStream.pipe(csvParserTransform);
-  csvParserTransform.pipe(alertsLogicTransform);
+  // csvParserTransform.pipe(alertsLogicTransform);
   csvParserTransform.pipe(statsLogicTransform);
-  alertsLogicTransform.pipe(displayAlertsWritable);
+  // alertsLogicTransform.pipe(displayAlertsWritable);
   statsLogicTransform.pipe(displayStatsWritable);
 };
 
