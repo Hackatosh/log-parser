@@ -33,7 +33,7 @@ export class DisplayStatsWritable extends Writable {
       .join('\n');
 
     const totalHitsHelpString = '# Show total number of hits';
-    const totalHitsString = `Total - ${statsReport.totalHits} requests`;
+    const totalHitsString = `Total - ${statsReport.totalHits} requests\n`; // It's prettier this way with the \n
 
     const stringToDisplay = [
       welcomeString,
@@ -42,7 +42,7 @@ export class DisplayStatsWritable extends Writable {
       requestsHelpString,
       requestsStatsString,
       totalHitsHelpString,
-      totalHitsString
+      totalHitsString,
     ]
       .join('\n');
     console.log(stringToDisplay);

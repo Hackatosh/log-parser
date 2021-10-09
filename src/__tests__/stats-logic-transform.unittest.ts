@@ -62,16 +62,6 @@ describe('Parse CSV Lines', () => {
     expect(pushMock).toHaveBeenCalledTimes(2);
   });
 
-  test('Should throw on timestamp incoherence', async () => {
-    await callTransform(generateLogLine(baseTimestamp + 2, 'GET', '/api/users', 200));
-    const prom = callTransform(generateLogLine(baseTimestamp + 1, 'GET', '/api/users', 200));
-
-    await expect(prom).rejects.toThrowError(
-      new Error('Trying to ingest log file with a timestamp before the startTimestamp of the current stats report. ' +
-    `Log line timestamp: ${baseTimestamp + 1}, Start timestamp: ${baseTimestamp + 2}`));
-    expect(pushMock).toHaveBeenCalledTimes(0);
-  });
-
   test('Should correctly push one stats report', async () => {
     const expectedStatsReport = {
       startTimestamp: 1549573861,
@@ -101,6 +91,27 @@ describe('Parse CSV Lines', () => {
 
     // Trigger flush
     await callTransform(generateLogLine(baseTimestamp + 15, 'POST', '/api/dogs', 500));
+
+    expect(pushMock).toHaveBeenCalledTimes(1);
+    expect(pushMock).toHaveBeenCalledWith(expectedStatsReport);
+  });
+
+  test('Should not add request to report if it is too old', async () => {
+    const expectedStatsReport = {
+      startTimestamp: 1549573862,
+      endTimestamp: 1549573872,
+      requestsStats: {
+        'GET /api/users': 1,
+      },
+      statusesStats: {
+        200: 1,
+      },
+      totalHits: 1,
+    };
+
+    await callTransform(generateLogLine(baseTimestamp + 2, 'GET', '/api/users', 200));
+    await callTransform(generateLogLine(baseTimestamp + 1, 'GET', '/api/users', 200));
+    await callTransform(generateLogLine(baseTimestamp + 13, 'GET', '/api/users', 200));
 
     expect(pushMock).toHaveBeenCalledTimes(1);
     expect(pushMock).toHaveBeenCalledWith(expectedStatsReport);

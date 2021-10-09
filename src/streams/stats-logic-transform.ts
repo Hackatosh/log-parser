@@ -28,8 +28,8 @@ export class StatsLogicTransform extends Transform {
   private _ingestParsedLogFileLine(parsedLogLine: ParsedLogLine): void {
     // Sanity check
     if (this._statsReport.startTimestamp && parsedLogLine.timestamp < this._statsReport.startTimestamp) {
-      throw new Error('Trying to ingest log file with a timestamp before the startTimestamp of the current stats report. ' +
-                  `Log line timestamp: ${parsedLogLine.timestamp}, Start timestamp: ${this._statsReport.startTimestamp}`);
+      // The request is "too late" for the current report and should not be pushed in it
+      return;
     }
 
     if (!this._statsReport.startTimestamp) {
@@ -64,16 +64,12 @@ export class StatsLogicTransform extends Transform {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _transform(parsedLogLine: ParsedLogLine, _: BufferEncoding, callback: TransformCallback): void {
-    try {
-      if (this._shouldPushStatsReport(parsedLogLine)) {
-        this._pushStatsReport();
-        this._resetStatsReport();
-      }
-      this._ingestParsedLogFileLine(parsedLogLine);
-      callback();
-    } catch (err) {
-      callback(err);
+    if (this._shouldPushStatsReport(parsedLogLine)) {
+      this._pushStatsReport();
+      this._resetStatsReport();
     }
+    this._ingestParsedLogFileLine(parsedLogLine);
+    callback();
   }
 
   _flush(callback: TransformCallback): void {

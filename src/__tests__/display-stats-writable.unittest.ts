@@ -52,7 +52,7 @@ describe('Display Stats Messages', () => {
     'Request "POST /api/dogs" - 4 requests\n' +
     'Request "GET /api/out-of-luck" - 1 requests\n' +
     '# Show total number of hits\n' +
-    'Total - 11 requests';
+    'Total - 11 requests\n';
 
     await callWrite(statsReport);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
