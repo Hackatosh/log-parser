@@ -1,9 +1,8 @@
 import { ParsedLogLine } from '../../typings/log-line';
 import { AlertsLogicTransform } from '../../streams/alerts-logic-transform';
+import { AlertFired, AlertResolved } from '../../typings/alert-message';
 
 import SpyInstance = jest.SpyInstance;
-
-import { AlertFired, AlertResolved } from '../../typings/alert-message';
 
 describe('Alerts Logic', () => {
   let alertsLogicTransform: AlertsLogicTransform;
