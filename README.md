@@ -95,6 +95,8 @@ The software is able to :
 Alert is not fired again until it is resolved, which will happen when the number of requests goes below the previous limit.
 - Display statistics about request (number of hits per section, per request, per status and total) every 10s.
 
+A basic working CI pipeline has been configured for the repository and automatically build, unit test and lint the codebase.
+
 ### Built with
 
 The whole project is written in [Typescript](https://www.typescriptlang.org/docs/home.html). The package management is done with [Yarn](https://yarnpkg.com/).
@@ -110,6 +112,9 @@ The whole project is written in [Typescript](https://www.typescriptlang.org/docs
 **Tooling**
 * [Jest](https://jestjs.io/) - Javascript testing framework
 * [ESLint](https://eslint.org/) -  JavaScript linter
+
+**CI**
+* [Github Actions](https://github.com/features/actions) - Github CI/CD workflows
 
 ### Architectures choices
 
