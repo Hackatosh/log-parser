@@ -2,6 +2,7 @@ import { Transform, TransformCallback } from 'stream';
 
 import { ParsedLogLine } from '../typings/log-line';
 import { StatsReport } from '../typings/stats-report';
+import { getSectionFromRoute } from '../helpers/get-section-from-route';
 
 export class StatsLogicTransform extends Transform {
   private readonly _timeBeforeFlushInSeconds: number;
@@ -17,6 +18,7 @@ export class StatsLogicTransform extends Transform {
 
   private _resetStatsReport(): void {
     this._statsReport = {
+      sectionStats: {},
       statusesStats: {},
       requestsStats: {},
       totalHits: 0,
@@ -38,6 +40,13 @@ export class StatsLogicTransform extends Transform {
     }
 
     this._statsReport.totalHits += 1;
+
+    const section = getSectionFromRoute(parsedLogLine.requestRoute);
+    if (!this._statsReport.sectionStats[section]) {
+      this._statsReport.sectionStats[section] = 1;
+    } else {
+      this._statsReport.sectionStats[section] += 1;
+    }
 
     const request = `${parsedLogLine.requestMethod} ${parsedLogLine.requestRoute}`;
     if (!this._statsReport.requestsStats[request]) {
