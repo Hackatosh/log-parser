@@ -84,6 +84,7 @@ describe('Alerts Logic', () => {
     expect(pushMock).toHaveBeenCalledTimes(1);
     expect(pushMock).toHaveBeenCalledWith(new AlertFired(1200, baseTimestamp + 1));
 
+    await sendRequestsAtTime(1198, 4);
     await sendRequestsAtTime(1, 122);
 
     expect(pushMock).toHaveBeenCalledTimes(2);
