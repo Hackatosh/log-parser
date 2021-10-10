@@ -9,22 +9,22 @@ export const parseArgs = (args: ParsedArgs): LogParserArgs => {
   let logFilePath: string;
   if (!args.logFilePath) {
     logFilePath = DEFAULT_FILE_PATH;
-    console.log(`logFilePath not provided. Using default logFilePath : ${logFilePath}`);
+    console.log(`logFilePath not provided. Using default logFilePath : ${logFilePath}\n`);
   } else {
     logFilePath = args.logFilePath.toString();
-    console.log(`Using provided logFilePath : ${logFilePath}`);
+    console.log(`Using provided logFilePath : ${logFilePath}\n`);
   }
 
   let alertRpsThreshold: number;
   if (!args.alertRpsThreshold) {
     alertRpsThreshold = DEFAULT_ALERT_RPS_THRESHOLD;
-    console.log(`alertRpsThreshold. Using default alertRpsThreshold : ${alertRpsThreshold}`);
+    console.log(`alertRpsThreshold. Using default alertRpsThreshold : ${alertRpsThreshold}\n`);
   } else {
     alertRpsThreshold = Number(args.alertRpsThreshold);
     if (Number.isNaN(alertRpsThreshold)) {
       throw new Error(`Provided alertRpsThreshold "${args.alertRpsThreshold}" is not a number`);
     }
-    console.log(`Using provided alertRpsThreshold : ${alertRpsThreshold}`);
+    console.log(`Using provided alertRpsThreshold : ${alertRpsThreshold}\n`);
   }
 
   return { logFilePath, alertRpsThreshold };

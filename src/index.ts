@@ -25,11 +25,11 @@ const main = (logParserArgs: LogParserArgs): void => {
 
   // Error handling
   fileReadStream.on('error', (err) => {
-    console.log(`Error while reading file, process will exit. Error : ${err}`);
+    console.log(`Error while reading file, process will exit. Error : ${err}\n`);
     process.exit(1);
   });
   const attachUnexpectedErrorHandler = (stream: Stream): Stream => stream.on('error', (err) => {
-    console.log(`Unexpected error, process will exit. Error : ${err}`);
+    console.log(`Unexpected error, process will exit. Error : ${err}\n`);
     process.exit(1);
   });
   [splitByLineStream, csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable]
@@ -44,8 +44,9 @@ const main = (logParserArgs: LogParserArgs): void => {
 };
 
 try {
+  console.log('Launching log parser...\n');
   main(parseArgs(minimist(process.argv.slice(2))));
 } catch (err) {
-  console.log(`Error happened, process will exit. ${err}`);
+  console.log(`Error happened, process will exit. ${err}\n`);
   process.exit(1);
 }

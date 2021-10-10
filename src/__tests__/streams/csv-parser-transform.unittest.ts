@@ -47,7 +47,7 @@ describe('Parse CSV Lines', () => {
 
     await callTransform(csvLine);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
-    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}`);
+    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}\n`);
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 
@@ -56,7 +56,7 @@ describe('Parse CSV Lines', () => {
 
     await callTransform(csvLine);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
-    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}`);
+    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}\n`);
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 });

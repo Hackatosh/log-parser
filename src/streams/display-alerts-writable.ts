@@ -12,16 +12,16 @@ export class DisplayAlertsWritable extends Writable {
     switch (alertMessage.messageType) {
       case AlertMessageType.FIRED: {
         const { hits, timestamp } = alertMessage as AlertFired;
-        console.log(`High traffic generated an alert - hits = ${hits}, triggered at time = ${formatTimestamp(timestamp)}`);
+        console.log(`High traffic generated an alert - hits = ${hits}, triggered at time = ${formatTimestamp(timestamp)}\n`);
         break;
       }
       case AlertMessageType.RESOLVED: {
         const { timestamp } = alertMessage as AlertResolved;
-        console.log(`High traffic alert resolved - resolved at time = ${formatTimestamp(timestamp)}`);
+        console.log(`High traffic alert resolved - resolved at time = ${formatTimestamp(timestamp)}\n`);
         break;
       }
       default:
-        console.log(`Trying to display unknown alert message type : ${alertMessage.messageType}`);
+        console.log(`Trying to display unknown alert message type : ${alertMessage.messageType}\n`);
     }
   }
 
