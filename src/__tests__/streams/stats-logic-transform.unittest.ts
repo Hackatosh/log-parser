@@ -66,13 +66,18 @@ describe('Stats Logic', () => {
     const expectedStatsReport = {
       startTimestamp: 1549573861,
       endTimestamp: 1549573871,
-      totalHits: 8,
+      totalHits: 10,
+      sectionStats: {
+        '/api': 8,
+        '/report': 2,
+      },
       requestsStats: {
         'GET /api/users': 5,
         'POST /api/dogs': 3,
+        'PUT /report': 2,
       },
       statusesStats: {
-        200: 5,
+        200: 7,
         404: 2,
         500: 1,
       },
@@ -86,6 +91,8 @@ describe('Stats Logic', () => {
     await callTransform(generateLogLine(baseTimestamp + 2, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 3, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 5, 'POST', '/api/dogs', 500));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
 
     expect(pushMock).toHaveBeenCalledTimes(0);
 
@@ -100,6 +107,9 @@ describe('Stats Logic', () => {
     const expectedStatsReport = {
       startTimestamp: 1549573862,
       endTimestamp: 1549573872,
+      sectionStats: {
+        '/api': 1
+      },
       requestsStats: {
         'GET /api/users': 1,
       },
@@ -121,13 +131,18 @@ describe('Stats Logic', () => {
     const expectedStatsReport = {
       startTimestamp: 1549573861,
       endTimestamp: 1549573871,
-      totalHits: 8,
+      totalHits: 10,
+      sectionStats: {
+        '/api': 8,
+        '/report': 2,
+      },
       requestsStats: {
         'GET /api/users': 5,
         'POST /api/dogs': 3,
+        'PUT /report': 2,
       },
       statusesStats: {
-        200: 5,
+        200: 7,
         404: 2,
         500: 1,
       },
@@ -141,6 +156,8 @@ describe('Stats Logic', () => {
     await callTransform(generateLogLine(baseTimestamp + 2, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 3, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 5, 'POST', '/api/dogs', 500));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
 
     expect(pushMock).toHaveBeenCalledTimes(0);
 
@@ -154,13 +171,18 @@ describe('Stats Logic', () => {
     const firstExpectedStatsReport = {
       startTimestamp: 1549573861,
       endTimestamp: 1549573871,
-      totalHits: 8,
+      totalHits: 10,
+      sectionStats: {
+        '/api': 8,
+        '/report': 2,
+      },
       requestsStats: {
         'GET /api/users': 5,
         'POST /api/dogs': 3,
+        'PUT /report': 2,
       },
       statusesStats: {
-        200: 5,
+        200: 7,
         404: 2,
         500: 1,
       },
@@ -169,13 +191,18 @@ describe('Stats Logic', () => {
     const secondExpectedStatsReport = {
       startTimestamp: 1549573875,
       endTimestamp: 1549573885,
-      totalHits: 9,
+      totalHits: 10,
+      sectionStats: {
+        '/api': 9,
+        '/report': 1,
+      },
       requestsStats: {
+        'PUT /report': 1,
         'GET /api/users': 4,
         'POST /api/dogs': 5,
       },
       statusesStats: {
-        200: 6,
+        200: 7,
         400: 1,
         500: 2,
       },
@@ -189,6 +216,8 @@ describe('Stats Logic', () => {
     await callTransform(generateLogLine(baseTimestamp + 2, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 3, 'GET', '/api/users', 404));
     await callTransform(generateLogLine(baseTimestamp + 5, 'POST', '/api/dogs', 500));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
+    await callTransform(generateLogLine(baseTimestamp + 7, 'PUT', '/report', 200));
 
     expect(pushMock).toHaveBeenCalledTimes(0);
 
@@ -202,6 +231,7 @@ describe('Stats Logic', () => {
     await callTransform(generateLogLine(baseTimestamp + 17, 'POST', '/api/dogs', 400));
     await callTransform(generateLogLine(baseTimestamp + 19, 'POST', '/api/dogs', 500));
     await callTransform(generateLogLine(baseTimestamp + 23, 'GET', '/api/users', 200));
+    await callTransform(generateLogLine(baseTimestamp + 24, 'PUT', '/report', 200));
 
     expect(pushMock).toHaveBeenCalledTimes(1);
     expect(pushMock).toHaveBeenCalledWith(firstExpectedStatsReport);
