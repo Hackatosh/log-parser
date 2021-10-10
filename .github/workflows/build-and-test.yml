@@ -23,3 +23,8 @@ jobs:
         run: yarn test
       - name: Lint
         run: yarn lint
+      # Should be replaced by true E2E test which check the outputs
+      - name: Run basic scenarios
+        run: |
+          yarn start:dev --alertRpsThreshold 1
+          yarn start:dev --logFilePath resources/trigger_alert.txt
