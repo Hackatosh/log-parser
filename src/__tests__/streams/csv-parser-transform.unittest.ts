@@ -42,7 +42,7 @@ describe('Parse CSV Lines', () => {
     expect(pushMock).toBeCalledWith(expectedParsedLogLine);
   });
 
-  test('Throw error when csv line is incorrect (incorrect type)', async () => {
+  test('Log error when csv line is incorrect (incorrect type)', async () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,"GET /api/user HTTP/1.0",twohundred,1234';
 
     await callTransform(csvLine);
@@ -51,7 +51,7 @@ describe('Parse CSV Lines', () => {
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 
-  test('Throw error when csv line is incorrect (missing field)', async () => {
+  test('Log error when csv line is incorrect (missing field)', async () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,200,1234';
 
     await callTransform(csvLine);

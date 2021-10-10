@@ -19,6 +19,7 @@ describe('Display Stats Messages', () => {
     displayStatsWritable = null;
     consoleLogMock.mockRestore();
   });
+
   test('Should correctly display a stats message', async () => {
     // You have 15 requests
     // 1 on POST /login with 1 status 200

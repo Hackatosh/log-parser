@@ -38,7 +38,7 @@ describe('Display Alert Messages', () => {
     expect(consoleLogMock).toBeCalledWith(expectedMessage);
   });
 
-  test('Should throw for unknown alert message', async () => {
+  test('Should log an error for unknown alert message', async () => {
     const alert = { messageType: 'unknownAlertType' };
     const expectedMessage = 'Trying to display unknown alert message type : unknownAlertType\n';
 
