@@ -26,7 +26,11 @@ export class DisplayAlertsWritable extends Writable {
   }
 
   _write(alertMessage: AlertMessage, _: BufferEncoding, callback: (error?: (Error | null)) => void): void {
-    this._displayAlert(alertMessage);
-    callback();
+    try {
+      this._displayAlert(alertMessage);
+      callback();
+    } catch (err) /* istanbul ignore next */ {
+      callback(err);
+    }
   }
 }

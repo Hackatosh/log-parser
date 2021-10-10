@@ -64,16 +64,24 @@ export class StatsLogicTransform extends Transform {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _transform(parsedLogLine: ParsedLogLine, _: BufferEncoding, callback: TransformCallback): void {
-    if (this._shouldPushStatsReport(parsedLogLine)) {
-      this._pushStatsReport();
-      this._resetStatsReport();
+    try {
+      if (this._shouldPushStatsReport(parsedLogLine)) {
+        this._pushStatsReport();
+        this._resetStatsReport();
+      }
+      this._ingestParsedLogFileLine(parsedLogLine);
+      callback();
+    } catch (err) /* istanbul ignore next */ {
+      callback(err);
     }
-    this._ingestParsedLogFileLine(parsedLogLine);
-    callback();
   }
 
   _flush(callback: TransformCallback): void {
-    this._pushStatsReport();
-    callback();
+    try {
+      this._pushStatsReport();
+      callback();
+    } catch (err) /* istanbul ignore next */ {
+      callback(err);
+    }
   }
 }

@@ -49,8 +49,12 @@ export class DisplayStatsWritable extends Writable {
   }
 
   _write(statsReport: StatsReport, encoding: BufferEncoding, callback: (error?: (Error | null)) => void): void {
-    const convertedStatsReport = DisplayStatsWritable._convertStatsReportForDisplay(statsReport);
-    DisplayStatsWritable._displayStatsReport(convertedStatsReport);
-    callback();
+    try {
+      const convertedStatsReport = DisplayStatsWritable._convertStatsReportForDisplay(statsReport);
+      DisplayStatsWritable._displayStatsReport(convertedStatsReport);
+      callback();
+    } catch (err) /* istanbul ignore next */ {
+      callback(err);
+    }
   }
 }
