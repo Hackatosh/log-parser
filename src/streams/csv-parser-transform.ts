@@ -13,7 +13,8 @@ export class CsvParserTransform extends Transform {
     const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(?<status>[0-9]+),(?<bytes>[0-9]+)/;
     const parsed = new RegExp(regexPattern).exec(rawCsvLine);
     if (!parsed) {
-      throw new Error(`Incorrect CSV line : ${rawCsvLine}`);
+      console.log(`Incorrect CSV line : ${rawCsvLine}`);
+      return null;
     }
     const {
       remoteHost,
@@ -43,10 +44,12 @@ export class CsvParserTransform extends Transform {
   _transform(csvLine: string, _: BufferEncoding, callback: TransformCallback): void {
     try {
       const parsedLogFileLine = CsvParserTransform._parseCSV(csvLine.toString());
-      this.push(parsedLogFileLine);
+      if (parsedLogFileLine) {
+        this.push(parsedLogFileLine);
+      }
       callback();
-    } catch (e) {
-      callback(e);
+    } catch (err) /* istanbul ignore next */ {
+      callback(err);
     }
   }
 }

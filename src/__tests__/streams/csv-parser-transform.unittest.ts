@@ -6,6 +6,7 @@ import SpyInstance = jest.SpyInstance;
 describe('Parse CSV Lines', () => {
   let csvParserTransform: CsvParserTransform;
   let pushMock: SpyInstance;
+  let consoleLogMock: SpyInstance;
 
   const callTransform = (csvLine: string): Promise<void> =>
     new Promise((res, rej) => csvParserTransform._transform(csvLine, undefined, (err) => (err ? rej(err) : res())));
@@ -13,10 +14,12 @@ describe('Parse CSV Lines', () => {
   beforeEach(() => {
     csvParserTransform = new CsvParserTransform();
     pushMock = jest.spyOn(csvParserTransform, 'push').mockImplementation();
+    consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
   });
 
   afterEach(() => {
     pushMock.mockRestore();
+    consoleLogMock.mockRestore();
     csvParserTransform = null;
   });
 
@@ -42,16 +45,18 @@ describe('Parse CSV Lines', () => {
   test('Throw error when csv line is incorrect (incorrect type)', async () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,"GET /api/user HTTP/1.0",twohundred,1234';
 
-    const prom = callTransform(csvLine);
-    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    await callTransform(csvLine);
+    expect(consoleLogMock).toHaveBeenCalledTimes(1);
+    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}`);
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 
   test('Throw error when csv line is incorrect (missing field)', async () => {
     const csvLine = '"10.0.0.2","-","apache",1549573860,200,1234';
 
-    const prom = callTransform(csvLine);
-    await expect(prom).rejects.toThrowError(new Error(`Incorrect CSV line : ${csvLine}`));
+    await callTransform(csvLine);
+    expect(consoleLogMock).toHaveBeenCalledTimes(1);
+    expect(consoleLogMock).toHaveBeenCalledWith(`Incorrect CSV line : ${csvLine}`);
     expect(pushMock).toHaveBeenCalledTimes(0);
   });
 });
