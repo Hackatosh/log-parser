@@ -34,6 +34,7 @@ export class StatsLogicTransform extends Transform {
       return;
     }
 
+    // In case we just reset _statsReport
     if (!this._statsReport.startTimestamp) {
       this._statsReport.startTimestamp = parsedLogLine.timestamp;
       this._statsReport.endTimestamp = parsedLogLine.timestamp + this._timeBeforeFlushInSeconds;
@@ -68,7 +69,11 @@ export class StatsLogicTransform extends Transform {
   }
 
   private _pushStatsReport(): void {
+    // We "clone" the object to avoid any problem we could encounter by call this.push(this._statsReport)
+    // and modifying this._statsReport
+    // We don't need to "deep clone" the object because we call this._resetStatsReport immediately afterward
     this.push({ ...this._statsReport });
+    this._resetStatsReport();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -76,8 +81,8 @@ export class StatsLogicTransform extends Transform {
     try {
       if (this._shouldPushStatsReport(parsedLogLine)) {
         this._pushStatsReport();
-        this._resetStatsReport();
       }
+      // Add the received line
       this._ingestParsedLogFileLine(parsedLogLine);
       callback();
     } catch (err) /* istanbul ignore next */ {

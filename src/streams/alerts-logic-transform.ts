@@ -14,7 +14,7 @@ export class AlertsLogicTransform extends Transform {
   private _isFiring: boolean;
 
   constructor(alertRpsThreshold: number = 10) {
-    // You read parsed log file line and push stats report
+    // You read parsed log file line and push alerts
     super({ readableObjectMode: true, writableObjectMode: true });
     this._timeIntervalStored = 120; // 2 minutes
     this._totalRequestsThreshold = this._timeIntervalStored * alertRpsThreshold;
@@ -31,7 +31,7 @@ export class AlertsLogicTransform extends Transform {
         return;
       }
 
-      // If need to keep only two minutes, or else we will count more requests than needed
+      // We need to keep only two minutes, or else we will count more requests than needed
       if (this._timestampArray.min + this._timeIntervalStored < parsedLogLine.timestamp) {
         this._timestampArray.removeBelow(parsedLogLine.timestamp - this._timeIntervalStored);
       }

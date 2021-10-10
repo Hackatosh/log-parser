@@ -13,6 +13,8 @@ export class CsvParserTransform extends Transform {
     const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(?<status>[0-9]+),(?<bytes>[0-9]+)/;
     const parsed = new RegExp(regexPattern).exec(rawCsvLine);
     if (!parsed) {
+      // We do not throw because emitting an error from the stream would kill the whole pipeline
+      // As the error is recoverable, we just print a warning
       console.log(`Incorrect CSV line : ${rawCsvLine}\n`);
       return null;
     }

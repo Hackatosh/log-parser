@@ -14,7 +14,7 @@ import { LogParserArgs } from './typings/log-parser-args';
 import { parseArgs } from './helpers/parse-args';
 
 const main = (logParserArgs: LogParserArgs): void => {
-  // Creating all the streams
+  // Create all the streams
   const fileReadStream = createReadStream(logParserArgs.logFilePath);
   const splitByLineStream = split2();
   const csvParserTransform = new CsvParserTransform();
@@ -35,7 +35,7 @@ const main = (logParserArgs: LogParserArgs): void => {
   [splitByLineStream, csvParserTransform, alertsLogicTransform, statsLogicTransform, displayStatsWritable, displayAlertsWritable]
     .forEach(attachUnexpectedErrorHandler);
 
-  // Piping everything
+  // Pipe everything
   fileReadStream.pipe(splitByLineStream).pipe(csvParserTransform);
   csvParserTransform.pipe(alertsLogicTransform);
   csvParserTransform.pipe(statsLogicTransform);
