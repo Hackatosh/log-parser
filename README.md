@@ -150,6 +150,7 @@ The only limitation to scalability here is the internal state managed by the Sta
 - Implement more interesting way of displaying Statistics Report and Alerts (Slack message, emails...)
 - Implement a more sophisticated Alerting Logic (alerts by section, by request status, etc) with different thresholds
 - Add more statistics
+- Add a configuration to read logs from standard input
 
 ## Author
 
