@@ -22,7 +22,7 @@ describe('Display Alert Messages', () => {
 
   test('Should correctly display a fired alert message', async () => {
     const alert = new AlertFired(4, 1549573860);
-    const expectedMessage = 'High traffic generated an alert - hits = 4, triggered at time = 07-02-2019 22:11:00';
+    const expectedMessage = 'High traffic generated an alert - hits = 4, triggered at time = 07-02-2019 22:11:00\n';
 
     await callWrite(alert);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
@@ -31,7 +31,7 @@ describe('Display Alert Messages', () => {
 
   test('Should correctly display a resolved alert message', async () => {
     const alert = new AlertResolved(1549573860);
-    const expectedMessage = 'High traffic alert resolved - resolved at time = 07-02-2019 22:11:00';
+    const expectedMessage = 'High traffic alert resolved - resolved at time = 07-02-2019 22:11:00\n';
 
     await callWrite(alert);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);
@@ -40,7 +40,7 @@ describe('Display Alert Messages', () => {
 
   test('Should throw for unknown alert message', async () => {
     const alert = { messageType: 'unknownAlertType' };
-    const expectedMessage = 'Trying to display unknown alert message type : unknownAlertType';
+    const expectedMessage = 'Trying to display unknown alert message type : unknownAlertType\n';
 
     await callWrite(alert as AlertMessage);
     expect(consoleLogMock).toHaveBeenCalledTimes(1);

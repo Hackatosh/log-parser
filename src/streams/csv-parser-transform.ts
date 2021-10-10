@@ -13,7 +13,7 @@ export class CsvParserTransform extends Transform {
     const regexPattern = /"(?<remoteHost>.*)","(?<rfc931>.*)","(?<authUser>.*)",(?<timestamp>[0-9]+),"(?<requestMethod>.*) (?<requestRoute>.*) (?<requestProtocol>.*)",(?<status>[0-9]+),(?<bytes>[0-9]+)/;
     const parsed = new RegExp(regexPattern).exec(rawCsvLine);
     if (!parsed) {
-      console.log(`Incorrect CSV line : ${rawCsvLine}`);
+      console.log(`Incorrect CSV line : ${rawCsvLine}\n`);
       return null;
     }
     const {
