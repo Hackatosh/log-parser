@@ -5,7 +5,7 @@ import { AlertFired, AlertResolved } from '../typings/alert-message';
 import { TimestampArray } from '../helpers/timestamp-array';
 
 export class AlertsLogicTransform extends Transform {
-  private readonly _timeIntervalStoredInSeconds; // In seconds
+  private readonly _timeIntervalStoredInSeconds;
 
   private readonly _totalRequestsThreshold;
 
