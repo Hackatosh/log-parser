@@ -1,5 +1,5 @@
 // This structure is used for alerting
-// You use this structure to store the timestamps of the requests made and keep them sorted
+// This structure stores the timestamps of the processed requests and keep them sorted
 
 export class TimestampArray {
   private readonly _array: Array<number>;

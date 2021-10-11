@@ -30,11 +30,11 @@ export class StatsLogicTransform extends Transform {
   private _ingestParsedLogFileLine(parsedLogLine: ParsedLogLine): void {
     // Sanity check
     if (this._statsReport.startTimestamp && parsedLogLine.timestamp < this._statsReport.startTimestamp) {
-      // The request is "too late" for the current report and should not be pushed in it
+      // The request is "too late" for the current report and should not be pushed in the reports
       return;
     }
 
-    // In case we just reset _statsReport
+    // In case we have just reset _statsReport
     if (!this._statsReport.startTimestamp) {
       this._statsReport.startTimestamp = parsedLogLine.timestamp;
       this._statsReport.endTimestamp = parsedLogLine.timestamp + this._timeBeforeFlushInSeconds;
@@ -82,7 +82,6 @@ export class StatsLogicTransform extends Transform {
       if (this._shouldPushStatsReport(parsedLogLine)) {
         this._pushStatsReport();
       }
-      // Add the received line
       this._ingestParsedLogFileLine(parsedLogLine);
       callback();
     } catch (err) /* istanbul ignore next */ {
