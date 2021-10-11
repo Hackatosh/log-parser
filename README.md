@@ -122,7 +122,7 @@ The code is divided into 6 independent modules :
 
 - The line-by-line file reader which uses native fs module and split2 module
 - The CSV parser which converts each parsed line into a JS object
-- The Statistics Logic aggregating the csv lines into one stats report object and determines when this object should be sent to the next pipeline steps 
+- The Statistics Logic aggregating the csv lines into one stats report object and determining when this object should be sent to the next pipeline steps 
 - The Alerts Logic that manages the high traffic alert state (no alert / fired / resolved)
 - The Alerts Display handling alert related messages (fired/resolved)
 - The Statistics Display handling statistics reports
