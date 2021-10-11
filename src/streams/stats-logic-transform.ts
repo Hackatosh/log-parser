@@ -30,7 +30,7 @@ export class StatsLogicTransform extends Transform {
   private _ingestParsedLogFileLine(parsedLogLine: ParsedLogLine): void {
     // Sanity check
     if (this._statsReport.startTimestamp && parsedLogLine.timestamp < this._statsReport.startTimestamp) {
-      // The request is "too late" for the current report and should not be pushed in the reports
+      // The request is "too late" for the current report and should not be pushed in it
       return;
     }
 
