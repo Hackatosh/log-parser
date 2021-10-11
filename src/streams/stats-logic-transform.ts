@@ -34,7 +34,7 @@ export class StatsLogicTransform extends Transform {
       return;
     }
 
-    // In case we just reset _statsReport
+    // In case we have just reset _statsReport
     if (!this._statsReport.startTimestamp) {
       this._statsReport.startTimestamp = parsedLogLine.timestamp;
       this._statsReport.endTimestamp = parsedLogLine.timestamp + this._timeBeforeFlushInSeconds;
@@ -82,7 +82,6 @@ export class StatsLogicTransform extends Transform {
       if (this._shouldPushStatsReport(parsedLogLine)) {
         this._pushStatsReport();
       }
-      // Add the received line
       this._ingestParsedLogFileLine(parsedLogLine);
       callback();
     } catch (err) /* istanbul ignore next */ {

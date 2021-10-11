@@ -6,8 +6,8 @@ export interface StatsReport {
   // Number of each status
   statusesStats: Record<number, number>;
   totalHits: number;
-  startTimestamp: number;
-  endTimestamp: number;
+  startTimestamp: number; // Unix time
+  endTimestamp: number; // Unix time
 }
 
 // Stats report is converted to this by display stats
@@ -19,6 +19,6 @@ export interface StatsReportForDisplay {
   // The number of hits for each status, ordered by number of hits (desc)
   statusesStats: Array<{ status: number; hits: number }>;
   totalHits: number;
-  startTimestamp: number;
-  endTimestamp: number;
+  startTimestamp: number; // Unix time
+  endTimestamp: number; // Unix time
 }
